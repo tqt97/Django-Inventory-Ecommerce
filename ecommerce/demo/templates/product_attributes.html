@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>get_product_attributes</h1>
+{% for x in data %}
+<ul>
+  <li>{{ x.name }} - {{ x.description }} 
+    <hr>
+    {{ x.product_attribute }} - {{ x.product_attribute__attribute_value }}
+  </li>
+</ul>
+{% endfor %}
+<hr>
+
+{% for x in z %}
+ <p> {{ x.product_type }}</p>
+{% endfor %}
+<hr>
+error
+{% for x in y %}
+<p> {{ x.product_type }}</p>
+{% endfor %}
+{% endblock %}

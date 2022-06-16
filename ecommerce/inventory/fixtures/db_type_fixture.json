@@ -1,9 +1,8 @@
-[
-  {
-    "model": "inventory.producttype",
-    "id": "1",
-    "fields": {
-      "name": "shoes"
+[{
+        "model": "inventory.producttype",
+        "id": "1",
+        "fields": {
+            "name": "shoes"
+        }
     }
-  }
 ]

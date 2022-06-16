@@ -3,9 +3,9 @@ import pytest
 from faker import Faker
 from pytest_factoryboy import register
 
-fake = Faker()
-
 from ecommerce.inventory import models
+
+fake = Faker()
 
 
 class CategoryFactory(factory.django.DjangoModelFactory):

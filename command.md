@@ -1,0 +1,2 @@
+- docker-compose up
+- pip install psycopg2-binary
