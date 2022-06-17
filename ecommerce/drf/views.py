@@ -1,31 +1,27 @@
-from ecommerce.drf.serializers import AllProducts, ProductInventorySerializer
-from ecommerce.inventory.models import Product, ProductInventory
-from rest_framework import mixins, permissions, viewsets
+from ecommerce.drf.serializers import CategorySerializer, ProductSerializer,ProductInventorySerializer
+from ecommerce.inventory.models import Category, Product,ProductInventory
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 
-# Create your views here.
-class AllProductsViewSet(
-    viewsets.GenericViewSet,
-    mixins.ListModelMixin,
-    mixins.RetrieveModelMixin,
-):
-    queryset = Product.objects.all()
-    serializer_class = AllProducts
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-    lookup_field = "slug"
-
-    def retrieve(self, request, slug=None):
-        queryset = Product.objects.filter(category__slug=slug)[:10]
-        serializer = AllProducts(queryset, many=True)
+class CategoryListView(APIView):
+    def get(self, request):
+        queryset = Category.objects.all()
+        serializer = CategorySerializer(queryset, many=True)
         return Response(serializer.data)
 
 
-class ProductInventoryViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
-    queryset = ProductInventory.objects.all()
+class ProductListView(APIView):
+    def get(self, request, query=None):
+        queryset = Product.objects.filter(category__slug=query)
+        serializer = ProductSerializer(queryset, many=True)
+        return Response(serializer.data)
+class ProductInventoryByWebId(APIView):
+    """
+    Return Sub Product by WebId
+    """
 
-    def list(self, request, slug=None):
-        queryset = ProductInventory.objects.filter(product__category__slug=slug).filter(is_default=True)[:10]
-        serializer = ProductInventorySerializer(queryset, context={"request": request}, many=True)
-
+    def get(self, request, query=None):
+        queryset = ProductInventory.objects.filter(product__web_id=query)
+        serializer = ProductInventorySerializer(queryset, many=True)
         return Response(serializer.data)

@@ -1,2 +1,4 @@
 - docker-compose up
 - pip install psycopg2-binary
+- py manage.py startapp app_name ./ecommerce/folder_app_name
+- docker-compose --profile dev up -d
