@@ -41,11 +41,18 @@ INSTALLED_APPS = [
     "ecommerce.dashboard",
     "ecommerce.inventory",
     "ecommerce.demo",
+    "ecommerce.search",
+    "ecommerce.drf",
     # External applications
     "mptt",
+    "rest_framework",
+    "django_elasticsearch_dsl",
+    # Development
+    "debug_toolbar",
 ]
 
 MIDDLEWARE = [
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -136,3 +143,16 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+
+ELASTICSEARCH_DSL = {
+    "default": {"hosts": "localhost:9200"},
+}
+
+REST_FRAMEWORK = {
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
+    "PAGE_SIZE": 10,
+}

@@ -15,8 +15,20 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from rest_framework import routers
+
+from ecommerce.drf import views
+from ecommerce.search.views import SearchProductInventory
+
+router = routers.DefaultRouter()
+router.register(r"category/(?P<slug>[^/.]+)", views.ProductInventoryViewSet, basename="productbycategory")
+router.register(r"api", views.AllProductsViewSet, basename="allproducts")
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("demo/", include("ecommerce.demo.urls", namespace="demo")),
+    # path("api/", include("rest_framework.urls")),
+    path('search/<str:query>/', SearchProductInventory.as_view(), name="search"),
+    path("", include(router.urls)),
+    path("__debug__/", include("debug_toolbar.urls")),
 ]
